@@ -28,6 +28,6 @@ func minusOneLimit(value: int, minimum: int) -> int:
 
 func chance(test: int) -> bool:
 	var value = rng.randi_range(0, 100)
-	if test <= value:
+	if value <= test:
 		return true
 	return false

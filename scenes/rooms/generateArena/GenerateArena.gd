@@ -6,6 +6,14 @@ var progressTexts = {
 	"generatingRoom": "generating rooms"
 }
 
+var state = STATES.IDLE
+
+enum STATES {
+	IDLE,
+	BUILDING,
+	DONE
+}
+
 enum MAP_SIZES {
 	SMALL, MEDIUM, LARGE
 }
@@ -198,12 +206,15 @@ func _getVariation(value: int) -> int:
 	return value
 	
 func _setRoom(mapx: int, mapy: int, tiles: Array, map: Array) -> void:
+	var startx = Data.mapConfigs.tilesHori * mapx
+	var starty = Data.mapConfigs.tilesVert * mapy
+	
 	for y in range(Data.mapConfigs.tilesVert):
 		for x in range(Data.mapConfigs.tilesHori):
 			if _isWall(x, y, map[mapx][mapy]):
-				tiles[(mapx * Data.mapConfigs.tilesVert) + x][(mapy * Data.mapConfigs.tilesVert) + y] = _getVariation(Data.mapConfigs.wallBase)
+				tiles[startx + x][starty + y] = _getVariation(Data.mapConfigs.wallBase)
 			else:
-				tiles[(mapx * Data.mapConfigs.tilesHori) + x][(mapy * Data.mapConfigs.tilesHori) + y] = _getVariation(Data.mapConfigs.groundBase)
+				tiles[startx + x][starty + y] = _getVariation(Data.mapConfigs.groundBase)
 
 func _generateRooms(map: Array) -> Array:
 	var tiles = []
@@ -225,13 +236,23 @@ func _generateLevel() -> void:
 	var tiles = _generateRooms(map)
 	Global.CURRENT_MAP = map
 	Global.CURRENT_TILES = tiles
+	$Timer.wait_time = 0.5
+	$Timer.start()
 	
+func _physics_process(delta):
+	if state == STATES.DONE:
+		get_tree().change_scene("res://scenes/rooms/arena/Arena.tscn")
 	
 func _ready():
 	$CanvasLayer/lblProgress.text = progressTexts.loadConfig
-	$StartGenerating.wait_time = 0.4
-	$StartGenerating.start()
+	$Timer.wait_time = 0.5
+	$Timer.start()
 
 func _on_StartGenerating_timeout():
-	_generateLevel()
+	if state == STATES.IDLE:
+		_generateLevel()
+		state = STATES.BUILDING
+	elif state == STATES.BUILDING:
+		state = STATES.DONE
+		
 	
