@@ -65,7 +65,6 @@ func _crawlMap(map: Array, roomsToGenerate: int, extraRooms: int, mapSize: int) 
 		if noAddedRooms == 0:
 			x = Functions.randomInt(0, mapSize - 1)
 			y = Functions.randomInt(0, mapSize - 1)
-			
 			map[x][y] = {
 				"type": ROOM_TYPE.START,
 				"hidden": false,
@@ -74,6 +73,8 @@ func _crawlMap(map: Array, roomsToGenerate: int, extraRooms: int, mapSize: int) 
 				"doorWest": false,
 				"doorSouth": false,
 			}
+			Global.START_ROOM_X = x
+			Global.START_ROOM_Y = y
 			noAddedRooms += 1
 		if noAddedRooms == roomsToGenerate:
 			previousRoom = map[x][y]
@@ -95,6 +96,8 @@ func _crawlMap(map: Array, roomsToGenerate: int, extraRooms: int, mapSize: int) 
 					"doorWest": false,
 					"doorSouth": false,
 				}
+				Global.END_ROOM_X = x
+				Global.END_ROOM_Y = y
 				_linkRooms(dir, map[x][y], previousRoom)
 				noAddedRooms += 1
 		else:
@@ -146,9 +149,8 @@ func _crawlMap(map: Array, roomsToGenerate: int, extraRooms: int, mapSize: int) 
 			addedExtras += 1
 	return map
 
-func _generateMap(size: int) -> void:
+func _generateMap(size: int) -> Array:
 	var map: Array = []
-	#map.resize(Data.mapConfigs.arenaSize)
 	for y in range(Data.mapConfigs.arenaSize):
 		var row = []
 		for x in range(Data.mapConfigs.arenaSize):
@@ -167,10 +169,62 @@ func _generateMap(size: int) -> void:
 		count = Data.mapConfigs.large.size
 		extras = Functions.randomInt(0, Data.mapConfigs.large.size)
 	map = _crawlMap(map, count, extras, Data.mapConfigs.arenaSize)
+	return map
+
+func _isWall(x: int, y: int, room: Dictionary) -> bool:
+	if x == 0:
+		if (y == 6 || y == 7 || y == 8) && room.doorWest == true:
+			return false
+		return true
+	if x == Data.mapConfigs.tilesHori - 1:
+		if (y == 6 || y == 7 || y == 8) && room.doorEast == true:
+			return false
+		return true
+	if y == 0:
+		if (x == 9 || x == 10) && room.doorNorth == true:
+			return false
+		return true
+	if y == Data.mapConfigs.tilesVert - 1:
+		if (x == 9 || x == 10) && room.doorSouth == true:
+			return false
+		return true
+	return false
+	
+func _getVariation(value: int) -> int:
+	if Functions.chance(30):
+		value += 1
+	if Functions.chance(20):
+		value += 1
+	return value
+	
+func _setRoom(mapx: int, mapy: int, tiles: Array, map: Array) -> void:
+	for y in range(Data.mapConfigs.tilesVert):
+		for x in range(Data.mapConfigs.tilesHori):
+			if _isWall(x, y, map[mapx][mapy]):
+				tiles[(mapx * Data.mapConfigs.tilesVert) + x][(mapy * Data.mapConfigs.tilesVert) + y] = _getVariation(Data.mapConfigs.wallBase)
+			else:
+				tiles[(mapx * Data.mapConfigs.tilesHori) + x][(mapy * Data.mapConfigs.tilesHori) + y] = _getVariation(Data.mapConfigs.groundBase)
+
+func _generateRooms(map: Array) -> Array:
+	var tiles = []
+	for y in range(Data.mapConfigs.arenaSize * Data.mapConfigs.tilesVert):
+		var row = []
+		for x in range(Data.mapConfigs.arenaSize * Data.mapConfigs.tilesHori):
+			row.append(-1)
+		tiles.append(row)
+	
+	for y in range(Data.mapConfigs.arenaSize):
+		for x in range(Data.mapConfigs.arenaSize):
+			if !map[x][y].empty():
+				_setRoom(x, y, tiles, map)
+	return tiles
 
 
 func _generateLevel() -> void:
-	_generateMap(MAP_SIZES.SMALL)
+	var map = _generateMap(MAP_SIZES.SMALL)
+	var tiles = _generateRooms(map)
+	Global.CURRENT_MAP = map
+	Global.CURRENT_TILES = tiles
 	
 	
 func _ready():
@@ -180,3 +234,4 @@ func _ready():
 
 func _on_StartGenerating_timeout():
 	_generateLevel()
+	

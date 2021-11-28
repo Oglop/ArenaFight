@@ -9,6 +9,9 @@ var mapConfigs: Dictionary = {
 	"arenaSize": 10,
 	"tilesHori": 20,
 	"tilesVert": 15,
+	"tilesSize": 16,
+	"groundBase": 0,
+	"wallBase": 10,
 	"small": {
 		"size": 4,
 		"secrets": 1,
