@@ -179,7 +179,10 @@ func _generateMap(size: int) -> Array:
 	map = _crawlMap(map, count, extras, Data.mapConfigs.arenaSize)
 	return map
 
-func _isWall(x: int, y: int, room: Dictionary) -> bool:
+func _isWall(_x: int, _y: int, room: Dictionary) -> bool:
+	var x = _x % Data.mapConfigs.tilesHori
+	var y = _y % Data.mapConfigs.tilesVert
+	
 	if x == 0:
 		if (y == 6 || y == 7 || y == 8) && room.doorWest == true:
 			return false
@@ -205,29 +208,29 @@ func _getVariation(value: int) -> int:
 		value += 1
 	return value
 	
-func _setRoom(mapx: int, mapy: int, tiles: Array, map: Array) -> void:
-	var startx = Data.mapConfigs.tilesHori * mapx
-	var starty = Data.mapConfigs.tilesVert * mapy
-	
-	for y in range(Data.mapConfigs.tilesVert):
-		for x in range(Data.mapConfigs.tilesHori):
-			if _isWall(x, y, map[mapx][mapy]):
-				tiles[startx + x][starty + y] = _getVariation(Data.mapConfigs.wallBase)
-			else:
-				tiles[startx + x][starty + y] = _getVariation(Data.mapConfigs.groundBase)
+func _setRoom(x: int, y: int, tiles: Array, map: Array) -> void:
+	var mapy = y / Data.mapConfigs.tilesVert
+	var mapx = x / Data.mapConfigs.tilesHori
+	if mapx == 10:
+		print('dfsdfd')
+	if !map[mapx][mapy].empty():
+		if _isWall(x, y, map[mapx][mapy]):
+			tiles[x][y] = _getVariation(Data.mapConfigs.wallBase)
+		else:
+			tiles[x][y] = _getVariation(Data.mapConfigs.groundBase)
 
 func _generateRooms(map: Array) -> Array:
 	var tiles = []
-	for y in range(Data.mapConfigs.arenaSize * Data.mapConfigs.tilesVert):
+	
+	for x in range(Data.mapConfigs.arenaSize * Data.mapConfigs.tilesHori):
 		var row = []
-		for x in range(Data.mapConfigs.arenaSize * Data.mapConfigs.tilesHori):
+		for y in range(Data.mapConfigs.arenaSize * Data.mapConfigs.tilesVert):	
 			row.append(-1)
 		tiles.append(row)
-	
-	for y in range(Data.mapConfigs.arenaSize):
-		for x in range(Data.mapConfigs.arenaSize):
-			if !map[x][y].empty():
-				_setRoom(x, y, tiles, map)
+		
+	for x in range(Data.mapConfigs.arenaSize * Data.mapConfigs.tilesHori):
+		for y in range(Data.mapConfigs.arenaSize * Data.mapConfigs.tilesVert):
+			_setRoom(x, y, tiles, map)
 	return tiles
 
 
