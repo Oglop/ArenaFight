@@ -10,6 +10,8 @@ var mapConfigs: Dictionary = {
 	"tilesHori": 20,
 	"tilesVert": 15,
 	"tileSize": 16,
+	"cameraOffsetX": 160,
+	"cameraOffsetY": 120,
 	"groundBase": 0,
 	"wallBase": 10,
 	"small": {

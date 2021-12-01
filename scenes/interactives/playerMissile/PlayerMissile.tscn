@@ -1,0 +1,47 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://images/player.png" type="Texture" id=1]
+[ext_resource path="res://scenes/interactives/playerMissile/PlayerMissile.gd" type="Script" id=2]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 3.7881
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 1 )
+region = Rect2( 112, 32, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 1 )
+region = Rect2( 128, 32, 16, 16 )
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ SubResource( 3 ), SubResource( 4 ) ],
+"loop": true,
+"name": "default",
+"speed": 15.0
+} ]
+
+[sub_resource type="CircleShape2D" id=5]
+radius = 6.52995
+
+[node name="PlaterMissile" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="MissileBody" type="KinematicBody2D" parent="."]
+
+[node name="MissleCollision" type="CollisionShape2D" parent="MissileBody"]
+position = Vector2( 0.148651, 0 )
+shape = SubResource( 1 )
+
+[node name="MissileSprite" type="AnimatedSprite" parent="MissileBody"]
+position = Vector2( -0.148651, 0.743256 )
+frames = SubResource( 2 )
+playing = true
+
+[node name="MissleHitbox" type="Area2D" parent="MissileBody"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MissileBody/MissleHitbox"]
+shape = SubResource( 5 )
+
+[node name="Duration" type="Timer" parent="."]
