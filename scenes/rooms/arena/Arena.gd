@@ -26,7 +26,6 @@ func _drawLevel() -> void:
 			if Global.CURRENT_TILES[x][y] >= 0:
 				_drawTile(Global.CURRENT_TILES[x][y], x, y)
 
-
 func _ready():
 	_drawLevel()
 	#print("(Global.START_ROOM_X * 200) * 16 " + str(Global.START_ROOM_X * 200) + "(Global.START_ROOM_Y * 150) * 16) " + str(Global.START_ROOM_Y * 150)) 
