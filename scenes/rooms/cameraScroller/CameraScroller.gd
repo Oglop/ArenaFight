@@ -14,14 +14,15 @@ func _physics_process(delta):
 	#self.global_position.y += 1
 	if Input.is_mouse_button_pressed(1):
 		print("x: " + str(self.global_position.x) + "y: " + str(self.global_position.y))
-	
+	"""
 	if Input.is_action_just_pressed("RIGHT"):
 		self.global_position.x += 320
 	if Input.is_action_just_pressed("UP"):
 		self.global_position.y -= 240
 	if Input.is_action_just_pressed("LEFT"):
-		self.global_position.x -= 320
+		self.global_position.x -= 32
 	if Input.is_action_just_pressed("DOWN"):
 		self.global_position.y += 240
+	"""
 	
 		
