@@ -1,11 +1,23 @@
 extends Node
 
+enum DIRECTIONS {
+	EAST, NORTH, WEST, SOUTH, NONE
+}
+
+enum ARENA_STATES {
+	IDLE,
+	ROOM_PLAYING,
+	SCREEN_TRANSITION
+}
+
 var defaultSettings: Dictionary = {
 	"lastsave": "",
 	"fullscreen": false,
 }
 
 var mapConfigs: Dictionary = {
+	"screenSizeX": 320,
+	"screenSizeY": 240,
 	"arenaSize": 10,
 	"tilesHori": 20,
 	"tilesVert": 15,

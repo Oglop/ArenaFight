@@ -1,9 +1,13 @@
 extends Node
 
-signal playerExplosions
+
 signal firedAuto
 signal firedLaser
-signal shakeScreen
+signal playerExplosions
+signal setArenaState
 signal setCameraPosition
+signal shakeScreen
 signal scrollCamera
+signal cameraTransitionTo
+
 

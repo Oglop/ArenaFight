@@ -1,5 +1,6 @@
 extends Node
 
+var arenaState = Data.ARENA_STATES.IDLE
 var settings = {}
 var CURRENT_MAP = []
 var CURRENT_TILES = []

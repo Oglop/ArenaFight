@@ -3,12 +3,13 @@ extends Node2D
 onready var nonCollision = $NonCollision
 onready var collision = $Collision
 
+
 func _drawTile(value: int, x: int, y: int) -> void:
 
 	if value == 0:
 		nonCollision.set_cell(x, y, 0)
 	elif value == 1:
-		nonCollision.set_cell(x, y, 1)
+		nonCollision.set_cell(x, y, 2)
 	elif value == 2:
 		nonCollision.set_cell(x, y, 3)
 		

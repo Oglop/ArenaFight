@@ -9,4 +9,5 @@ func _ready():
 
 
 func _on_Duration_timeout():
+	Events.emit_signal("shakeScreen")
 	self.queue_free()
