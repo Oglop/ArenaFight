@@ -15,7 +15,13 @@ var defaultSettings: Dictionary = {
 	"fullscreen": false,
 }
 
-var mapConfigs: Dictionary = {
+const gameConfigs: Dictionary = {
+	"playerMaxSpeed": 6000,
+	"playerFriction": 1000,
+	"playerAcceleration": 200
+}
+
+const mapConfigs: Dictionary = {
 	"screenSizeX": 320,
 	"screenSizeY": 240,
 	"arenaSize": 10,
@@ -40,7 +46,7 @@ var mapConfigs: Dictionary = {
 	}
 }
 
-var weapons: Dictionary = {
+const weapons: Dictionary = {
 	"laser": {
 		"name": "Laser",
 		"speed": 300,

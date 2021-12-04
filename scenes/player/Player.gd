@@ -2,9 +2,9 @@ extends KinematicBody2D
 
 var screenTransitionDirection = 0
 var velocity = Vector2.ZERO
-const MAX_SPEED = 5000
-const ACCELERATION = 200
-const FRICTION = 1000
+const MAX_SPEED = Data.gameConfigs.playerMaxSpeed
+const ACCELERATION = Data.gameConfigs.playerAcceleration
+const FRICTION = Data.gameConfigs.playerFriction
 const moveOnTransition = 1.0
 
 func _ready():
@@ -39,6 +39,7 @@ func _setDirection():
 
 func _on_ScreenTransition(direction):
 	screenTransitionDirection = direction
+
 
 func _physics_process(delta):
 	if Global.arenaState == Data.ARENA_STATES.ROOM_PLAYING:

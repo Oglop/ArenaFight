@@ -1,7 +1,6 @@
 extends Node2D
 
-var transitionToDirection = 99
-const duration = 1.0
+const duration = 0.8
 var stepsX = Data.mapConfigs.screenSizeX / 30
 var stepsY = Data.mapConfigs.screenSizeY / 30
 var moveToX = 0
@@ -12,8 +11,8 @@ func _ready():
 	Events.connect("cameraTransitionTo", self, "_on_cameraTransitionTo")
 
 func _on_cameraSetPosition(x, y):
-	moveToX = x * Data.mapConfigs.screenSizeX# + Data.mapConfigs.cameraOffsetX
-	moveToY = y * Data.mapConfigs.screenSizeY# + Data.mapConfigs.cameraOffsetY
+	moveToX = x * Data.mapConfigs.screenSizeX
+	moveToY = y * Data.mapConfigs.screenSizeY
 	
 	self.global_position.x = x * Data.mapConfigs.screenSizeX
 	self.global_position.y = y * Data.mapConfigs.screenSizeY
