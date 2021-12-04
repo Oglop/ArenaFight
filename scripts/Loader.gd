@@ -5,13 +5,15 @@ enum TYPE {
 	BULLET_AUTO,
 	BULLET_LASER,
 	ARENA,
-	ARENA_DOOR
+	ARENA_DOOR,
+	BOMBABLE
 }
 
 onready var Player = preload("res://scenes/player/Player.tscn")
 onready var LaserBullet = preload("res://scenes/interactives/playerLaserBullet/PlayerLaserBullet.tscn")
 onready var AutoBullet = preload("res://scenes/interactives/PlayerGunBullet/PlayerGunBullet.tscn")
 onready var ArenaDoor = preload("res://scenes/rooms/entryBlock/EntryBlock.tscn")
+onready var Bombable = preload("res://scenes/rooms/bombableBlock/BombableBlock.tscn")
 
 #onready var Arena = preload("res://scenes/rooms/arena/Arena.tscn")
 
@@ -28,6 +30,8 @@ func getScene(type):
 		return LaserBullet.instance()
 	elif type == TYPE.ARENA_DOOR:
 		return ArenaDoor.instance()
+	elif type == TYPE.BOMBABLE:
+		return Bombable.instance()
 	
 	
 

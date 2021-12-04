@@ -37,8 +37,14 @@ func _addDoor(room: Dictionary, x: int, y: int) -> void:
 			Events.emit_signal("arenaAddAssetAt", Loader.TYPE.ARENA_DOOR, Vector2(x * Data.mapConfigs.tileSize,y * Data.mapConfigs.tileSize))
 
 func _addBombables(room: Dictionary, roomx: int, roomy: int) -> void:
-	if room.type == Data.ROOM_TYPES.EMPTY:
-		pass
+	var baseX = roomx * Data.mapConfigs.tileSize
+	var baseY = roomy * Data.mapConfigs.tileSize
+	if room.type == Data.ROOM_TYPE.CORRIDOR:
+		if room.design == Data.ROOM_DESIGN.CROSS:
+			Events.emit_signal("arenaAddAssetAt", Loader.TYPE.BOMBABLE, Vector2(baseX + 9, baseY + 6) * 16)
+			Events.emit_signal("arenaAddAssetAt", Loader.TYPE.BOMBABLE, Vector2(baseX + 10, baseY + 6) * 16)
+			Events.emit_signal("arenaAddAssetAt", Loader.TYPE.BOMBABLE, Vector2(baseX + 9, baseY + 7) * 16)
+			Events.emit_signal("arenaAddAssetAt", Loader.TYPE.BOMBABLE, Vector2(baseX + 10, baseY + 7) * 16)
 		
 
 func _drawLevel() -> void:

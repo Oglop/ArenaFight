@@ -18,13 +18,21 @@ enum MAP_SIZES {
 	SMALL, MEDIUM, LARGE
 }
 
-enum ROOM_TYPE {
-	NONE, START, END, CORRIDOR, EXTRA
-}
-
 enum DIRECTION {
 	EAST, NORTH, WEST, SOUTH, NONE
 }
+
+func _getRoomRandomDesign(type: int) -> int:
+	if type == Data.ROOM_TYPE.CORRIDOR:
+		var i = Functions.randomInt(0, 3)
+		if i == 0:
+			return Data.ROOM_DESIGN.EMPTY
+		elif i == 1:
+			return Data.ROOM_DESIGN.CROSS
+		elif i == 2:
+			return Data.ROOM_DESIGN.RANDOM_OPEN
+	
+	return Data.ROOM_DESIGN.EMPTY
 
 func _getRandomDirection(previousDirection: int, allowPreviousDirection: bool = true) -> int:
 	var i = Functions.randomInt(0,3)
@@ -74,7 +82,8 @@ func _crawlMap(map: Array, roomsToGenerate: int, extraRooms: int, mapSize: int) 
 			x = Functions.randomInt(0, mapSize - 1)
 			y = Functions.randomInt(0, mapSize - 1)
 			map[x][y] = {
-				"type": ROOM_TYPE.START,
+				"type": Data.ROOM_TYPE.START,
+				"design": Data.ROOM_DESIGN.EMPTY,
 				"hidden": false,
 				"doorEast": false,
 				"doorNorth": false,
@@ -97,7 +106,8 @@ func _crawlMap(map: Array, roomsToGenerate: int, extraRooms: int, mapSize: int) 
 				y = Functions.plusOneLimit(y, mapSize - 1)
 			if map[x][y].empty():
 				map[x][y] = {
-					"type": ROOM_TYPE.END,
+					"type": Data.ROOM_TYPE.END,
+					"design": Data.ROOM_DESIGN.EMPTY,
 					"hidden": false,
 					"doorEast": false,
 					"doorNorth": false,
@@ -120,8 +130,10 @@ func _crawlMap(map: Array, roomsToGenerate: int, extraRooms: int, mapSize: int) 
 			elif dir == DIRECTION.SOUTH:
 				y = Functions.plusOneLimit(y, mapSize - 1)
 			if map[x][y].empty():
+				var _design = _getRoomRandomDesign(Data.ROOM_TYPE.CORRIDOR)
 				map[x][y] = {
-					"type": ROOM_TYPE.CORRIDOR,
+					"type": Data.ROOM_TYPE.CORRIDOR,
+					"design": _design,
 					"hidden": false,
 					"doorEast": false,
 					"doorNorth": false,
@@ -146,7 +158,7 @@ func _crawlMap(map: Array, roomsToGenerate: int, extraRooms: int, mapSize: int) 
 			y = Functions.plusOneLimit(room.y, mapSize - 1)
 		if map[x][y].empty():
 			map[x][y] = {
-				"type": ROOM_TYPE.EXTRA,
+				"type": Data.ROOM_TYPE.EXTRA,
 				"hidden": false,
 				"doorEast": false,
 				"doorNorth": false,

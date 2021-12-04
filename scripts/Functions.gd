@@ -31,3 +31,4 @@ func chance(test: int) -> bool:
 	if value <= test:
 		return true
 	return false
+	
