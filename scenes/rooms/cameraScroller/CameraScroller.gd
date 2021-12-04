@@ -12,6 +12,9 @@ func _ready():
 	Events.connect("cameraTransitionTo", self, "_on_cameraTransitionTo")
 
 func _on_cameraSetPosition(x, y):
+	moveToX = x * Data.mapConfigs.screenSizeX# + Data.mapConfigs.cameraOffsetX
+	moveToY = y * Data.mapConfigs.screenSizeY# + Data.mapConfigs.cameraOffsetY
+	
 	self.global_position.x = x * Data.mapConfigs.screenSizeX
 	self.global_position.y = y * Data.mapConfigs.screenSizeY
 	

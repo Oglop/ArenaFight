@@ -5,7 +5,7 @@ var velocity = Vector2.ZERO
 const MAX_SPEED = 5000
 const ACCELERATION = 200
 const FRICTION = 1000
-const moveOnTransition = 2.0
+const moveOnTransition = 1.0
 
 func _ready():
 	Global.arenaState = Data.ARENA_STATES.ROOM_PLAYING
@@ -13,13 +13,13 @@ func _ready():
 
 func _checkForScreenTransition():
 	# arenaScreenTransitionTo
-	if int(global_position.x) % 320 < 10:
+	if int(global_position.x) % Data.mapConfigs.screenSizeX < 10:
 		Events.emit_signal("cameraTransitionTo", Data.DIRECTIONS.WEST)
-	elif int(global_position.x) % 320 > 310:
+	elif int(global_position.x) % Data.mapConfigs.screenSizeX > 310:
 		Events.emit_signal("cameraTransitionTo", Data.DIRECTIONS.EAST)
-	elif int(global_position.y) % 240 < 10:
+	elif int(global_position.y) % Data.mapConfigs.screenSizeY < 10:
 		Events.emit_signal("cameraTransitionTo", Data.DIRECTIONS.NORTH)
-	elif int(global_position.y) % 240 > 230:
+	elif int(global_position.y) % Data.mapConfigs.screenSizeY > 230:
 		Events.emit_signal("cameraTransitionTo", Data.DIRECTIONS.SOUTH)
 
 
