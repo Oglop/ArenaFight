@@ -4,11 +4,23 @@ enum DIRECTIONS {
 	EAST, NORTH, WEST, SOUTH, NONE
 }
 
+enum ARENA_DOOR_STATES {
+	OPEN, CLOSED
+}
+
 enum ARENA_STATES {
 	IDLE,
 	ROOM_PLAYING,
 	SCREEN_TRANSITION
 }
+
+enum ROOM_TYPES {
+	EMPTY,
+	RANDOM_OPEN,
+	CROSS
+}
+
+
 
 var defaultSettings: Dictionary = {
 	"lastsave": "",

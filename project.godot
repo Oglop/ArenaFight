@@ -88,6 +88,10 @@ CANCEL={
 2d_physics/layer_5="enemybullet"
 2d_render/layer_6="collectable"
 2d_physics/layer_6="collectable"
+2d_render/layer_7="bomb"
+2d_physics/layer_7="bomb"
+2d_render/layer_8="bombable"
+2d_physics/layer_8="bombable"
 
 [physics]
 
