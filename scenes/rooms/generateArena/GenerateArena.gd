@@ -24,7 +24,7 @@ enum DIRECTION {
 
 func _getRoomRandomDesign(type: int) -> int:
 	if type == Data.ROOM_TYPE.CORRIDOR:
-		var i = Functions.randomInt(0, 3)
+		var i = Functions.randomInt(1, 2)
 		if i == 0:
 			return Data.ROOM_DESIGN.EMPTY
 		elif i == 1:
@@ -146,7 +146,7 @@ func _crawlMap(map: Array, roomsToGenerate: int, extraRooms: int, mapSize: int) 
 	var addedExtras = 0
 	while addedExtras < extraRooms:
 		var room = _getRandomRoom(map, mapSize)
-		previousRoom = map[x][y]
+		previousRoom = room# map[x][y]
 		dir = _getRandomDirection(dir)
 		if dir == DIRECTION.EAST:
 			x = Functions.plusOneLimit(room.x, mapSize - 1)

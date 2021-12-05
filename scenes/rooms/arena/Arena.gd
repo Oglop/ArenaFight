@@ -35,17 +35,63 @@ func _addDoor(room: Dictionary, x: int, y: int) -> void:
 	if mody == Data.mapConfigs.tilesVert - 1:
 		if (modx == 9 || modx == 10) && room.doorSouth == true:
 			Events.emit_signal("arenaAddAssetAt", Loader.TYPE.ARENA_DOOR, Vector2(x * Data.mapConfigs.tileSize,y * Data.mapConfigs.tileSize))
+			
 
-func _addBombables(room: Dictionary, roomx: int, roomy: int) -> void:
-	var baseX = roomx * Data.mapConfigs.tileSize
-	var baseY = roomy * Data.mapConfigs.tileSize
+func _addBombables(room: Dictionary, x: int, y: int) -> void:
+	var modx = x % Data.mapConfigs.tilesHori
+	var mody = y % Data.mapConfigs.tilesVert
 	if room.type == Data.ROOM_TYPE.CORRIDOR:
-		if room.design == Data.ROOM_DESIGN.CROSS:
-			Events.emit_signal("arenaAddAssetAt", Loader.TYPE.BOMBABLE, Vector2(baseX + 9, baseY + 6) * 16)
-			Events.emit_signal("arenaAddAssetAt", Loader.TYPE.BOMBABLE, Vector2(baseX + 10, baseY + 6) * 16)
-			Events.emit_signal("arenaAddAssetAt", Loader.TYPE.BOMBABLE, Vector2(baseX + 9, baseY + 7) * 16)
-			Events.emit_signal("arenaAddAssetAt", Loader.TYPE.BOMBABLE, Vector2(baseX + 10, baseY + 7) * 16)
-		
+			if room.design == Data.ROOM_DESIGN.CROSS:
+				# Midle
+				if modx == 9 && mody == 6:
+					Events.emit_signal("arenaAddAssetAt", Loader.TYPE.BOMBABLE, Vector2(x * Data.mapConfigs.tileSize,y * Data.mapConfigs.tileSize))
+				if modx == 10 && mody == 6:
+					Events.emit_signal("arenaAddAssetAt", Loader.TYPE.BOMBABLE, Vector2(x * Data.mapConfigs.tileSize,y * Data.mapConfigs.tileSize))
+				if modx == 9 && mody == 7:
+					Events.emit_signal("arenaAddAssetAt", Loader.TYPE.BOMBABLE, Vector2(x * Data.mapConfigs.tileSize,y * Data.mapConfigs.tileSize))
+				if modx == 10 && mody == 7:
+					Events.emit_signal("arenaAddAssetAt", Loader.TYPE.BOMBABLE, Vector2(x * Data.mapConfigs.tileSize,y * Data.mapConfigs.tileSize))
+				#Left
+				if modx == 7 && mody == 6:
+					Events.emit_signal("arenaAddAssetAt", Loader.TYPE.BOMBABLE, Vector2(x * Data.mapConfigs.tileSize,y * Data.mapConfigs.tileSize))
+				if modx == 8 && mody == 6:
+					Events.emit_signal("arenaAddAssetAt", Loader.TYPE.BOMBABLE, Vector2(x * Data.mapConfigs.tileSize,y * Data.mapConfigs.tileSize))
+				if modx == 7 && mody == 7:
+					Events.emit_signal("arenaAddAssetAt", Loader.TYPE.BOMBABLE, Vector2(x * Data.mapConfigs.tileSize,y * Data.mapConfigs.tileSize))
+				if modx == 8 && mody == 7:
+					Events.emit_signal("arenaAddAssetAt", Loader.TYPE.BOMBABLE, Vector2(x * Data.mapConfigs.tileSize,y * Data.mapConfigs.tileSize))
+				#right
+				if modx == 11 && mody == 6:
+					Events.emit_signal("arenaAddAssetAt", Loader.TYPE.BOMBABLE, Vector2(x * Data.mapConfigs.tileSize,y * Data.mapConfigs.tileSize))
+				if modx == 12 && mody == 6:
+					Events.emit_signal("arenaAddAssetAt", Loader.TYPE.BOMBABLE, Vector2(x * Data.mapConfigs.tileSize,y * Data.mapConfigs.tileSize))
+				if modx == 11 && mody == 7:
+					Events.emit_signal("arenaAddAssetAt", Loader.TYPE.BOMBABLE, Vector2(x * Data.mapConfigs.tileSize,y * Data.mapConfigs.tileSize))
+				if modx == 12 && mody == 7:
+					Events.emit_signal("arenaAddAssetAt", Loader.TYPE.BOMBABLE, Vector2(x * Data.mapConfigs.tileSize,y * Data.mapConfigs.tileSize))
+				#north
+				if modx == 9 && mody == 4:
+					Events.emit_signal("arenaAddAssetAt", Loader.TYPE.BOMBABLE, Vector2(x * Data.mapConfigs.tileSize,y * Data.mapConfigs.tileSize))
+				if modx == 10 && mody == 4:
+					Events.emit_signal("arenaAddAssetAt", Loader.TYPE.BOMBABLE, Vector2(x * Data.mapConfigs.tileSize,y * Data.mapConfigs.tileSize))
+				if modx == 9 && mody == 5:
+					Events.emit_signal("arenaAddAssetAt", Loader.TYPE.BOMBABLE, Vector2(x * Data.mapConfigs.tileSize,y * Data.mapConfigs.tileSize))
+				if modx == 10 && mody == 5:
+					Events.emit_signal("arenaAddAssetAt", Loader.TYPE.BOMBABLE, Vector2(x * Data.mapConfigs.tileSize,y * Data.mapConfigs.tileSize))
+				#south
+				if modx == 9 && mody == 8:
+					Events.emit_signal("arenaAddAssetAt", Loader.TYPE.BOMBABLE, Vector2(x * Data.mapConfigs.tileSize,y * Data.mapConfigs.tileSize))
+				if modx == 10 && mody == 8:
+					Events.emit_signal("arenaAddAssetAt", Loader.TYPE.BOMBABLE, Vector2(x * Data.mapConfigs.tileSize,y * Data.mapConfigs.tileSize))
+				if modx == 9 && mody == 9:
+					Events.emit_signal("arenaAddAssetAt", Loader.TYPE.BOMBABLE, Vector2(x * Data.mapConfigs.tileSize,y * Data.mapConfigs.tileSize))
+				if modx == 10 && mody == 9:
+					Events.emit_signal("arenaAddAssetAt", Loader.TYPE.BOMBABLE, Vector2(x * Data.mapConfigs.tileSize,y * Data.mapConfigs.tileSize))
+			if room.design == Data.ROOM_DESIGN.RANDOM_OPEN:
+				if modx >= 4 && modx <=16 && mody >= 4 && mody <= 10:
+					if Functions.chance(7):
+						Events.emit_signal("arenaAddAssetAt", Loader.TYPE.BOMBABLE, Vector2(x * Data.mapConfigs.tileSize,y * Data.mapConfigs.tileSize))
+				
 
 func _drawLevel() -> void:
 	
@@ -57,6 +103,7 @@ func _drawLevel() -> void:
 			if Global.CURRENT_TILES[x][y] >= 0:
 				_drawTile(Global.CURRENT_TILES[x][y], x, y)
 				_addDoor(room, x, y)
+				_addBombables(room, x, y)
 				
 				
 	for x in range(Data.mapConfigs.arenaSize):
