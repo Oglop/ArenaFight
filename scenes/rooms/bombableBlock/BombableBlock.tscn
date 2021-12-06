@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://images/tilesCollision.png" type="Texture" id=1]
+[ext_resource path="res://scenes/rooms/bombableBlock/BombableBlock.gd" type="Script" id=2]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 1 )
@@ -21,6 +22,7 @@ extents = Vector2( 8, 8 )
 extents = Vector2( 8, 8 )
 
 [node name="BombableBlock" type="Node2D"]
+script = ExtResource( 2 )
 
 [node name="BombableBlockSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 2 )
@@ -41,3 +43,5 @@ collision_mask = 10
 [node name="CollisionBox" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2( 8, 8 )
 shape = SubResource( 4 )
+
+[connection signal="area_entered" from="BombableBlockArea2D" to="." method="_on_BombableBlockArea2D_area_entered"]

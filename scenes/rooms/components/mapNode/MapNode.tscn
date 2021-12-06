@@ -1,0 +1,154 @@
+[gd_scene load_steps=22 format=2]
+
+[ext_resource path="res://scenes/rooms/components/mapNode/MapNode.gd" type="Script" id=1]
+[ext_resource path="res://images/menu.png" type="Texture" id=2]
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 2 )
+region = Rect2( 88, 24, 8, 8 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 2 )
+region = Rect2( 104, 16, 8, 8 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 2 )
+region = Rect2( 104, 24, 8, 8 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 2 )
+region = Rect2( 96, 24, 8, 8 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 2 )
+region = Rect2( 88, 16, 8, 8 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 2 )
+region = Rect2( 96, 16, 8, 8 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 2 )
+region = Rect2( 88, 16, 8, 8 )
+
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 2 )
+region = Rect2( 80, 24, 8, 8 )
+
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 2 )
+region = Rect2( 88, 16, 8, 8 )
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 2 )
+region = Rect2( 80, 16, 8, 8 )
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ SubResource( 3 ) ],
+"loop": true,
+"name": "end",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 4 ) ],
+"loop": true,
+"name": "start",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 5 ) ],
+"loop": true,
+"name": "room",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 6 ), SubResource( 7 ) ],
+"loop": true,
+"name": "roomCur",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 8 ), SubResource( 9 ) ],
+"loop": true,
+"name": "startCur",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 10 ), SubResource( 11 ) ],
+"loop": true,
+"name": "endCur",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 1 ) ],
+"loop": true,
+"name": "notFound",
+"speed": 5.0
+} ]
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 2 )
+region = Rect2( 120, 24, 8, 8 )
+
+[sub_resource type="SpriteFrames" id=13]
+animations = [ {
+"frames": [ SubResource( 12 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 2 )
+region = Rect2( 128, 24, 8, 8 )
+
+[sub_resource type="SpriteFrames" id=15]
+animations = [ {
+"frames": [ SubResource( 14 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="AtlasTexture" id=16]
+atlas = ExtResource( 2 )
+region = Rect2( 136, 24, 8, 8 )
+
+[sub_resource type="SpriteFrames" id=17]
+animations = [ {
+"frames": [ SubResource( 16 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="AtlasTexture" id=18]
+atlas = ExtResource( 2 )
+region = Rect2( 112, 24, 8, 8 )
+
+[sub_resource type="SpriteFrames" id=19]
+animations = [ {
+"frames": [ SubResource( 18 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[node name="MapNode" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="NodeSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 4, 4 )
+frames = SubResource( 2 )
+animation = "startCur"
+
+[node name="Right" type="AnimatedSprite" parent="."]
+position = Vector2( 4, 4 )
+frames = SubResource( 13 )
+
+[node name="North" type="AnimatedSprite" parent="."]
+position = Vector2( 4, 4 )
+frames = SubResource( 15 )
+
+[node name="Left" type="AnimatedSprite" parent="."]
+position = Vector2( 4, 4 )
+frames = SubResource( 17 )
+
+[node name="South" type="AnimatedSprite" parent="."]
+position = Vector2( 4, 4 )
+frames = SubResource( 19 )

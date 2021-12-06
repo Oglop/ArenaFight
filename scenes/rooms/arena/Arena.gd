@@ -97,9 +97,7 @@ func _drawLevel() -> void:
 	
 	for x in range(Data.mapConfigs.arenaSize * Data.mapConfigs.tilesHori):
 		for y in range(Data.mapConfigs.arenaSize * Data.mapConfigs.tilesVert):
-			var mapy = y / Data.mapConfigs.tilesVert
-			var mapx = x / Data.mapConfigs.tilesHori
-			var room = Global.CURRENT_MAP[mapx][mapy]
+			var room = Functions.getRoom(x, y)
 			if Global.CURRENT_TILES[x][y] >= 0:
 				_drawTile(Global.CURRENT_TILES[x][y], x, y)
 				_addDoor(room, x, y)
@@ -111,8 +109,7 @@ func _drawLevel() -> void:
 			var room: Dictionary = Global.CURRENT_MAP[x][y]
 			if !room.empty():
 				_addBombables(room, x, y)
-				
-			
+
 func _ready():
 	_drawLevel()
 	Events.emit_signal("setCameraPosition", Global.START_ROOM_X, Global.START_ROOM_Y)

@@ -84,6 +84,8 @@ func _crawlMap(map: Array, roomsToGenerate: int, extraRooms: int, mapSize: int) 
 			map[x][y] = {
 				"type": Data.ROOM_TYPE.START,
 				"design": Data.ROOM_DESIGN.EMPTY,
+				"visited": true,
+				"cleared": false,
 				"hidden": false,
 				"doorEast": false,
 				"doorNorth": false,
@@ -108,6 +110,8 @@ func _crawlMap(map: Array, roomsToGenerate: int, extraRooms: int, mapSize: int) 
 				map[x][y] = {
 					"type": Data.ROOM_TYPE.END,
 					"design": Data.ROOM_DESIGN.EMPTY,
+					"visited": false,
+					"cleared": false,
 					"hidden": false,
 					"doorEast": false,
 					"doorNorth": false,
@@ -134,6 +138,8 @@ func _crawlMap(map: Array, roomsToGenerate: int, extraRooms: int, mapSize: int) 
 				map[x][y] = {
 					"type": Data.ROOM_TYPE.CORRIDOR,
 					"design": _design,
+					"visited": false,
+					"cleared": false,
 					"hidden": false,
 					"doorEast": false,
 					"doorNorth": false,
@@ -144,22 +150,31 @@ func _crawlMap(map: Array, roomsToGenerate: int, extraRooms: int, mapSize: int) 
 				noAddedRooms += 1
 
 	var addedExtras = 0
+	var previousPoint = { "x":0, "y":0 }
 	while addedExtras < extraRooms:
 		var room = _getRandomRoom(map, mapSize)
-		previousRoom = room# map[x][y]
+		previousRoom = map[room.x][room.y]
+		previousPoint = room.duplicate()
 		dir = _getRandomDirection(dir)
 		if dir == DIRECTION.EAST:
 			x = Functions.plusOneLimit(room.x, mapSize - 1)
+			y = room.y
 		elif dir == DIRECTION.NORTH:
+			x = room.x
 			y = Functions.minusOneLimit(room.y, 0)
 		elif dir == DIRECTION.WEST:
 			x = Functions.minusOneLimit(room.x, 0)
+			y = room.y
 		elif dir == DIRECTION.SOUTH:
+			x = room.x
 			y = Functions.plusOneLimit(room.y, mapSize - 1)
 		if map[x][y].empty():
 			map[x][y] = {
 				"type": Data.ROOM_TYPE.EXTRA,
+				"design": Data.ROOM_DESIGN.EMPTY,
 				"hidden": false,
+				"visited": false,
+				"cleared": false,
 				"doorEast": false,
 				"doorNorth": false,
 				"doorWest": false,
@@ -223,8 +238,6 @@ func _getVariation(value: int) -> int:
 func _setRoom(x: int, y: int, tiles: Array, map: Array) -> void:
 	var mapy = y / Data.mapConfigs.tilesVert
 	var mapx = x / Data.mapConfigs.tilesHori
-	if mapx == 10:
-		print('dfsdfd')
 	if !map[mapx][mapy].empty():
 		if _isWall(x, y, map[mapx][mapy]):
 			tiles[x][y] = _getVariation(Data.mapConfigs.wallBase)

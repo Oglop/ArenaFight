@@ -24,8 +24,6 @@ enum ROOM_DESIGN {
 	CROSS
 }
 
-
-
 var defaultSettings: Dictionary = {
 	"lastsave": "",
 	"fullscreen": false,
@@ -49,11 +47,11 @@ const mapConfigs: Dictionary = {
 	"groundBase": 0,
 	"wallBase": 10,
 	"small": {
-		"size": 4,
+		"size": 5,
 		"secrets": 1,
 	},
 	"medium": {
-		"size": 7,
+		"size": 8,
 		"secrets": 2,
 	},
 	"large": {

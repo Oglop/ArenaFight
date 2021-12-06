@@ -47,4 +47,5 @@ func _startTransitionDuration():
 	$TransitiomDuration.start()
 
 func _on_TransitiomDuration_timeout():
+	Events.emit_signal("roomTransitionDone")
 	Global.arenaState = Data.ARENA_STATES.ROOM_PLAYING

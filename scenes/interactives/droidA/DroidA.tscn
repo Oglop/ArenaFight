@@ -40,4 +40,7 @@ script = ExtResource( 2 )
 
 [node name="DroidASprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 7 )
+frame = 4
 playing = true
+
+[node name="BombSpawnPoint" type="Position2D" parent="."]

@@ -32,3 +32,7 @@ func chance(test: int) -> bool:
 		return true
 	return false
 	
+func getRoom(x: int, y: int) -> Dictionary:
+	var mapy = y / Data.mapConfigs.tilesVert
+	var mapx = x / Data.mapConfigs.tilesHori
+	return Global.CURRENT_MAP[mapx][mapy]

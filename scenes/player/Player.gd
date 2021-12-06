@@ -10,6 +10,14 @@ const moveOnTransition = 1.0
 func _ready():
 	Global.arenaState = Data.ARENA_STATES.ROOM_PLAYING
 	Events.connect("cameraTransitionTo", self, "_on_ScreenTransition")
+	Events.connect("roomTransitionDone", self, "_on_screenTransitionDone")
+	for n in range(Global.TAIL_SIZE,-1,-1):
+		Global.DROID_POSITION[n] = self.global_position
+
+func _updateDroidPositions():
+	for n in range(Global.TAIL_SIZE, 0, -1):
+		Global.DROID_POSITION[n] = Global.DROID_POSITION[n - 1]
+	Global.DROID_POSITION[0] = self.global_position
 
 func _checkForScreenTransition():
 	# arenaScreenTransitionTo
@@ -22,6 +30,8 @@ func _checkForScreenTransition():
 	elif int(global_position.y) % Data.mapConfigs.screenSizeY > 230:
 		Events.emit_signal("cameraTransitionTo", Data.DIRECTIONS.SOUTH)
 
+func _on_screenTransitionDone() -> void:
+	Events.emit_signal("updateMiniMap", self.global_position.x, self.global_position.y)
 
 func _on_HitBox_area_entered(area):
 	pass # Replace with function body.
@@ -53,8 +63,10 @@ func _physics_process(delta):
 			velocity = velocity.clamped(MAX_SPEED * delta)
 		else:
 			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
+			
 		_setDirection()
 		move_and_slide(velocity)
+		_updateDroidPositions()
 		
 		_checkForScreenTransition()
 	elif Global.arenaState == Data.ARENA_STATES.SCREEN_TRANSITION:
